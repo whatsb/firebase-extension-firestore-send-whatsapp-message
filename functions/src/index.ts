@@ -56,7 +56,6 @@ export const submit = onDocumentCreated(`${config.MESSAGES_COLLECTION}/{messageI
                 return;
             }
 
-            // Construct the payload based on business logic
             const [apiNode, messagePayload] = constructPayload(snapshotData);
             if (apiNode === null) {
                 logger.error("Unsupported message format", { documentId: event.params.messageId });
