@@ -35,7 +35,7 @@ params:
   - param: WHATSBOX_API_KEY
     label: WhatsBox API Key
     description: >-
-      Generate your API key at [https://app.handoff.chat/settings/api-keys].
+      Generate your API key at [https://app.whatsbox.io/settings/api-keys].
     type: secret
     default: ""
     required: true
