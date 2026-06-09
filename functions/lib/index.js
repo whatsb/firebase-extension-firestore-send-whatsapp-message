@@ -63,7 +63,6 @@ exports.submit = (0, firestore_1.onDocumentCreated)(`${config_1.default.MESSAGES
             });
             return;
         }
-        console.log("Constructed message payload, sending API request to WhatsBox.", { apiNode, messagePayload });
         const payload = {
             medium: "FIREBASE_EXTENSION",
             channel_id: from,

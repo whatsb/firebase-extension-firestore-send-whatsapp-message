@@ -74,7 +74,6 @@ export const submit = onDocumentCreated(`${config.MESSAGES_COLLECTION}/{messageI
                 return;
             }
 
-            console.log("Constructed message payload, sending API request to WhatsBox.", { apiNode, messagePayload });
             const payload = {
                 medium: "FIREBASE_EXTENSION",
                 channel_id: from,
