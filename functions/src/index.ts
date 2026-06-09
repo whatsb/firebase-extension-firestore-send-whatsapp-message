@@ -23,6 +23,7 @@ export const submit = onDocumentCreated(`${config.MESSAGES_COLLECTION}/{messageI
         if (!initialized) {
             await initialize();
         }
+  
         const snapshot = event.data as FirebaseFirestore.DocumentSnapshot;
         const docRef = snapshot.ref;
 
@@ -31,9 +32,6 @@ export const submit = onDocumentCreated(`${config.MESSAGES_COLLECTION}/{messageI
             const instanceId = process.env.EXT_INSTANCE_ID;
             const apiHost = config.API_HOST || "https://api.whatsbox.io";
 
-            console.log(whatsboxApiKey);
-
-            // Validate critical environment variables
             if (!whatsboxApiKey) {
                 logger.error("Missing environment variable", { missingKey: "WHATSBOX_API_KEY", message: "WHATSBOX_API_KEY environment variable is not set." });
                 await docRef.update({
@@ -46,9 +44,6 @@ export const submit = onDocumentCreated(`${config.MESSAGES_COLLECTION}/{messageI
             const to = snapshotData?.to;
             const from = snapshotData?.from || config.DEFAULT_FROM;
 
-            console.log(from);
-
-            // Validate required document data
             if (!to) {
                 logger.error("Missing required document field", { field: "to", message: "'to' field is required in the document" });
                 await docRef.update({ delivery: { status: STATUS.ERROR, error: { message: "'to' field is required in the document" } } });
