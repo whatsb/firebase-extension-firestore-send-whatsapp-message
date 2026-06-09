@@ -1,22 +1,35 @@
-# .github/release.yml
-changelog:
-  exclude:
-    commits: false
-  
-  categories:
-    - title: "🚀 New Features"
-      labels: [] # Leave empty for commits
-      # This regex matches commit messages starting with "feat:" or "feat(...):"
-      commit-prefixes: 
-        - "feat:"
-        - "feat("
-    - title: "🐛 Bug Fixes"
-      labels: []
-      commit-prefixes:
-        - "fix:"
-        - "fix("
-    - title: "📝 Documentation"
-      labels: []
-      commit-prefixes:
-        - "docs:"
-        - "docs("
+name: Create GitHub Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Needed so the changelog engine can see the history
+
+      # 1. This action reads your raw commits locally and builds the markdown string
+      - name: Generate Changelog
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          output-file: false # Don't commit a changelog file back to git, just generate text
+          skip-commit: true
+
+      # 2. This step takes that generated markdown and hands it off to your release
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.clean_changelog }} # Uses the text from step 1
