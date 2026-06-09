@@ -1,5 +1,8 @@
 # .github/release.yml
 changelog:
+  exclude:
+    commits: false
+  
   categories:
     - title: "🚀 New Features"
       labels: [] # Leave empty for commits
