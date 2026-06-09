@@ -27,7 +27,6 @@ exports.submit = (0, firestore_1.onDocumentCreated)(`${config_1.default.MESSAGES
         const whatsboxApiKey = config_1.default.WHATSBOX_API_KEY;
         const instanceId = process.env.EXT_INSTANCE_ID;
         const apiHost = config_1.default.API_HOST || "https://api.whatsbox.io";
-        console.log(whatsboxApiKey);
         // Validate critical environment variables
         if (!whatsboxApiKey) {
             firebase_functions_1.logger.error("Missing environment variable", { missingKey: "WHATSBOX_API_KEY", message: "WHATSBOX_API_KEY environment variable is not set." });
@@ -38,7 +37,11 @@ exports.submit = (0, firestore_1.onDocumentCreated)(`${config_1.default.MESSAGES
         }
         const snapshotData = snapshot.data();
         const to = snapshotData?.to;
-        const from = snapshotData?.from || config_1.default.DEFAULT_FROM;
+        let from = snapshotData?.from || config_1.default.DEFAULT_FROM;
+        // remove all non-digit characters from the 'from' field (e.g., +, -, spaces) to ensure it is in the correct format for the API
+        if (from) {
+            from = from.replace(/\D/g, '');
+        }
         console.log(from);
         // Validate required document data
         if (!to) {

@@ -26,12 +26,12 @@ export const submit = onDocumentCreated(`${config.MESSAGES_COLLECTION}/{messageI
         const snapshot = event.data as FirebaseFirestore.DocumentSnapshot;
         const docRef = snapshot.ref;
 
+        console.log(config);
+        
         try {
             const whatsboxApiKey = config.WHATSBOX_API_KEY;
             const instanceId = process.env.EXT_INSTANCE_ID;
             const apiHost = config.API_HOST || "https://api.whatsbox.io";
-
-            console.log(whatsboxApiKey);
 
             // Validate critical environment variables
             if (!whatsboxApiKey) {
@@ -44,9 +44,13 @@ export const submit = onDocumentCreated(`${config.MESSAGES_COLLECTION}/{messageI
 
             const snapshotData = snapshot.data() as WhatsAppDocData | undefined;
             const to = snapshotData?.to;
-            const from = snapshotData?.from || config.DEFAULT_FROM;
+            let from = snapshotData?.from || config.DEFAULT_FROM;
+            // remove all non-digit characters from the 'from' field (e.g., +, -, spaces) to ensure it is in the correct format for the API
+            if (from) {
+                from = from.replace(/\D/g, '');
+            }
 
-            console.log(from);
+            console.log(from)
 
             // Validate required document data
             if (!to) {
