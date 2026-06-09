@@ -36,7 +36,7 @@ params:
     label: WhatsBox API Key
     description: >-
       Generate your API key at [https://app.handoff.chat/settings/api-keys].
-    type: string
+    type: secret
     default: ""
     required: true
     immutable: false
