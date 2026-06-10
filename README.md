@@ -12,6 +12,7 @@ Before installing and using this extension, ensure you have completed the follow
 1. Add a WhatsApp Number: [Connect a WhatsApp number on WhatsBox](https://app.whatsbox.io/channels). You can use your own number or select a Meta-provided test number.
 1. Create WhatsApp Templates: Create and get your message templates approved on [Meta WhatsApp Manager](https://business.facebook.com/wa/manage/template-library).
 1. Sync Templates: [Sync your approved templates on WhatsBox](https://app.whatsbox.io/templates/wa-sync) before the extension can use them to send messages via the WhatsApp Business API.
+1. Secret Management Permission: This extension uses GCP Secret Manager to securely store WhatsBox's API key. If the user installing the extension does not have an "Owner" role, you may have to add the [Secret Manager Admin](https://docs.cloud.google.com/iam/docs/roles-permissions/secretmanager#secretmanager.admin) (roles/secretmanager.admin) IAM role on the project for the user. [More info](https://docs.cloud.google.com/secret-manager/docs/creating-and-accessing-secrets)
 
 ## Installation
 
