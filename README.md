@@ -16,7 +16,7 @@ Before installing and using this extension, ensure you have completed the follow
 
 ## Installation
 
-You can install this extension using one of two methods:
+**Firebase Extensions Hub isn't allowing listing of new extenions (which makes interactive installation easier.) at the time being.** You can install this extension using one of these two methods:
 
 ### Method 1: Automated Script (Recommended)
 
